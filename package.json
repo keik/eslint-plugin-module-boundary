@@ -1,0 +1,47 @@
+{
+  "name": "eslint-plugin-module-boundary",
+  "version": "0.0.1",
+  "description": "ESLint rules to define module boundary.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node $(glob 'rules/**/*.test.js')"
+  },
+  "files": [
+    "index.js",
+    "rules",
+    "!*.test.js"
+  ],
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keik/eslint-plugin-module-boundary.git"
+  },
+  "author": "keik <k4t0.kei@gmail.com>",
+  "keywords": [
+    "architecture",
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keik/eslint-plugin-module-boundary/issues"
+  },
+  "homepage": "https://github.com/keik/eslint-plugin-module-boundary#readme",
+  "devDependencies": {
+    "cli-glob": "^0.1.0",
+    "eslint": "^6.0.0",
+    "prettier": "^1.19.1"
+  },
+  "peerDependencies": {
+    "eslint": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
+  },
+  "dependencies": {
+    "contains-path": "^1.0.0",
+    "debug": "^4.1.1",
+    "glob-all": "^3.1.0"
+  }
+}
