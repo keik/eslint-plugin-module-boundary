@@ -1,30 +1,32 @@
 const path = require("path");
 
-const containsPath = require('contains-path')
+const containsPath = require("contains-path");
 const debug = require("debug")("eslint-plugin-module-boundary:no-imports");
-const globAll = require('glob-all')
+const globAll = require("glob-all");
 
 module.exports = {
   meta: {
     type: "layout",
-    schema: [{
-      type: 'object',
-      properties: {
-        'roots': {
-          type: 'array'
+    schema: [
+      {
+        type: "object",
+        properties: {
+          roots: {
+            type: "array"
+          }
         }
       }
-    }]
+    ]
   },
   create(context) {
     const filename = path.relative(context.getCwd(), context.getFilename());
-    const option = context.options[0]
-    const roots = globAll.sync(option.roots)
+    const option = context.options[0];
+    const roots = globAll.sync(option.roots);
 
     debug("create()", filename);
     return {
       ImportDeclaration(node) {
-        const importPath = node.source.value
+        const importPath = node.source.value;
         if (!isValid(roots, filename, importPath))
           context.report(
             node,
@@ -37,13 +39,17 @@ module.exports = {
 };
 
 function isValid(roots, filename, importPath) {
-  debug(`isValid(${JSON.stringify(roots)}, ${JSON.stringify(filename)}, ${JSON.stringify(importPath)})`);
+  debug(
+    `isValid(${JSON.stringify(roots)}, ${JSON.stringify(
+      filename
+    )}, ${JSON.stringify(importPath)})`
+  );
 
-  const root = roots.find(root => containsPath(filename, root))
-  if (root == null) return true
+  const root = roots.find(root => containsPath(filename, root));
+  if (root == null) return true;
 
-  const importPathFromCwd = path.join(path.dirname(filename), importPath)
-  return containsPath(importPathFromCwd, root)
+  const importPathFromCwd = path.join(path.dirname(filename), importPath);
+  return containsPath(importPathFromCwd, root);
 }
 
-module.exports.isValid = isValid
+module.exports.isValid = isValid;
