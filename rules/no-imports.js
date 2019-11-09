@@ -21,7 +21,11 @@ module.exports = {
   create(context) {
     const filename = path.relative(context.getCwd(), context.getFilename());
     const option = context.options[0];
-    const roots = globAll.sync(option.roots);
+
+    const roots =
+      process.env.NODE_ENV === "test"
+        ? option.roots
+        : globAll.sync(option.roots);
 
     debug("create()", filename);
     return {
@@ -44,6 +48,9 @@ function isValid(roots, filename, importPath) {
       filename
     )}, ${JSON.stringify(importPath)})`
   );
+
+  // valid when not importing from file
+  if (importPath[0] !== ".") return true;
 
   const root = roots.find(root => containsPath(filename, root));
   if (root == null) return true;
