@@ -19,7 +19,7 @@ module.exports = {
     ]
   },
   create(context) {
-    const filename = path.relative(context.getCwd(), context.getFilename());
+    const filename = path.relative(process.cwd(), context.getFilename());
     const option = context.options[0];
 
     const roots =
